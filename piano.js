@@ -420,8 +420,10 @@
             }
         }
 
+	//ZW: keyCode 17 is the Control button on the keyboard,
+	// so I changed the new trigger to C (for Chopsticks), keycode 67
         function demoHandler(evt) {
-            if (evt.type === 'click' || (evt.keyCode == 17 && !isModifierKey(evt))) { //m is 77 // control is 
+            if (evt.type === 'click' || (evt.keyCode == 67 && !isModifierKey(evt))) { //m is 77 // control is 
                 if (demoing) {
                     demoing = false;
                     window.clearTimeout(demoingTimeout);
