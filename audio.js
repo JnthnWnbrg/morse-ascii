@@ -101,15 +101,17 @@ window.log = function f(){ log.history = log.history || []; log.history.push(arg
         },
         volume: {
             flat: function(data, freq, volume) {
-                return volume * data;
+                return (volume*(440/freq)) * data; //zw //reduces volume of higher pitches
             },
             linearFade: function(data, freq, volume, i, sampleRate, seconds, maxI) {
-                return volume * ((maxI - i) / maxI) * data;
+                return (volume*(440/freq)) * ((maxI - i) / maxI) * data;
+		//ZW: for cool effect, use this instead
+		// return (volume*(440/freq^2)) * ((maxI - i) / maxI) * data;
             },
             quadraticFade: function(data, freq, volume, i, sampleRate, seconds, maxI) {
                 // y = -a(x - m)(x + m); and given point (m, 0)
                 // y = -(1/m^2)*x^2 + 1;
-                return volume * ((-1/Math.pow(maxI, 2))*Math.pow(i, 2) + 1) * data;
+                return (volume*(440/freq)) * ((-1/Math.pow(maxI, 2))*Math.pow(i, 2) + 1) * data;
             }
         }
     });
