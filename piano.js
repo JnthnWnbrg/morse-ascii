@@ -289,6 +289,56 @@
     // Demo
     //
     (function(undefined) {
+	var foxOpeningSong3 = (function() {
+            var data = [
+                {
+                    'style': 'wave',
+                    'volume': 'linearFade',
+                    'notesOffset': 0 //so that 0 is C
+                }
+            ];
+
+            data.push(
+                [4, 4],
+                [6, 6],
+                [7, 7],
+                [9, 9],
+                [11, 11],
+
+		[11, 11],
+		[9, 9],
+		[11, 11],
+		[12, 12],
+		[9, 9],
+		[7, 7],
+		[6, 6],
+		[7, 7],
+
+            );
+
+	data.push(
+                [4, 4],
+                [6, 6],
+                [7, 7],
+                [9, 9],
+                [9, 9],
+
+		[9, 9],
+
+		[11, 11],
+
+		[9, 9],
+
+		[8, 8],
+
+		[4, 4],
+		
+            );
+
+
+            return data;
+        })();
+	///////////
         var chopsticks = (function() {
             var data = [
                 {
@@ -420,16 +470,14 @@
             }
         }
 
-	//ZW: keyCode 17 is the Control button on the keyboard,
-	// so I changed the new trigger to C (for Chopsticks), keycode 67
         function demoHandler(evt) {
-            if (evt.type === 'click' || (evt.keyCode == 67 && !isModifierKey(evt))) { //m is 77 // control is 
+            if (evt.type === 'click' || (evt.keyCode == 77 && !isModifierKey(evt))) { //m is 77 // control is 
                 if (demoing) {
                     demoing = false;
                     window.clearTimeout(demoingTimeout);
                     $keys.unbind('build-done.piano');
                 } else {
-                    demo(chopsticks);
+                    demo(foxOpeningSong3); //zw
                 }
             }
         }
