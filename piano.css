@@ -87,7 +87,7 @@ html, body { height: 100%; }
 }
 .key.black.pressed:after,
 .key.black:active:after {
-    background-color: #222;
+    background-color: #555; /* zw */
 }
 
 /* **/
