@@ -18,7 +18,7 @@
         10: 3
     };
     $.each(blackKeys, function(k, v) {
-        blackKeys[k] = ' black black'+v;;
+        blackKeys[k] = ' black black'+v; //zw
     });
 
     function blackKeyClass(i) {
@@ -138,29 +138,50 @@
     // Setup keyboard interaction
     //
 
+    
     var keyNotes = {
-        /*a*/ 65: 0, // c
-        /*w*/ 87: 1, // c#
-        /*s*/ 83: 2, // d
-        /*e*/ 69: 3, // d#
-        /*d*/ 68: 4, // e
-        /*f*/ 70: 5, // f
-        /*t*/ 84: 6, // f#
-        /*g*/ 71: 7, // g
-        /*y*/ 89: 8, // g#
-        /*h*/ 72: 9, // a
-        /*u*/ 85: 10, // a#
-        /*j*/ 74: 11, // b
-        /*k*/ 75: 12, // c
-        /*o*/ 79: 13, // c#
-        /*l*/ 76: 14, // d
-        /*p*/ 80: 15, // d#
-        /*;*/ 186: 16, // e
-        /*;*/ 59: 16, // e ... gotta figure out why it's sometimes 186 and sometimes 59
-        /*,*/ 222: 17, // f
-        /*]*/ 221: 18, // f#
-        /*enter*/ 13: 19 // g
+        /*1*/ 49: 0,
+        /*2*/ 50: 1,
+        /*3*/ 51: 2,
+        /*4*/ 52: 3,
+        /*5*/ 53: 4,
+        /*6*/ 54: 5,
+        /*7*/ 55: 6,
+        /*8*/ 56: 7,
+        /*9*/ 57: 8,
+        /*0*/ 48: 9,
+        /*-*/ 189: 10,
+        /*+*/ 187: 11, //zw: Note: - and + don't work in Firefox
+        /*q*/ 81: 0+12, // c
+        /*w*/ 87: 1+12, // c#
+        /*e*/ 69: 2+12, // d
+        /*r*/ 82: 3+12, // d#
+        /*t*/ 84: 4+12, // e
+        /*y*/ 89: 5+12, // f
+        /*u*/ 85: 6+12, // f#
+        /*i*/ 73: 7+12, // g
+        /*o*/ 79: 8+12, // g#
+        /*p*/ 80: 9+12, // a
+        /*[*/ 219: 10+12, // a#
+        /*]*/ 221: 11+12, // b
+        /*a*/ 65: 12+12, // c
+        /*s*/ 83: 13+12, // c#
+        /*d*/ 68: 14+12, // d
+        /*f*/ 70: 15+12, // d#
+        /*g*/ 71: 16+12, // e
+        /*h*/ 72: 17+12, // f
+        ///*j*/ 74: 16, // e ... gotta figure out why it's sometimes 186 and sometimes 59
+        /*j*/ 74: 18+12, // f#
+        /*k*/ 75: 19+12, // g
+        /*l*/ 76: 20+12, // g#
+        /*;*/ 186: 21+12, // a
+        /*'*/ 222: 22+12, // a#
+        /*enter*/ 13: 23+12, // b
+        /*z*/ 90: 24+12, // c
+        /*x*/ 88: 25+12, // c#
+        /*c*/ 67: 26+12, // d
     };
+    
     var notesShift = -12;
     var downKeys = {};
 
@@ -177,9 +198,9 @@
             if (typeof key != 'undefined') {
                 $keys.trigger('note-'+(key+notesShift+notesOffset)+'.play');
                 evt.preventDefault();
-            } else if (evt.keyCode == 188) {
+            } else if (evt.keyCode == 188) { // , is 188 //up is 38
                 notesShift = -12;
-            } else if (evt.keyCode == 190) {
+            } else if (evt.keyCode == 190) { //190 is . // down is 40
                 notesShift = 0;
             } else if (keyCode == 37 || keyCode == 39) {
                 notesOffset += (keyCode == 37 ? -1 : 1) * 12;
@@ -198,8 +219,8 @@
     var colors = 'f33 33f 3f3 ff3 f3f 3ff'.split(' '),
         curColor = 0;
 
-    function colorHandler(evt) {
-        if (evt.type === 'click' || (evt.keyCode == 67 && !isModifierKey(evt))) {
+    function colorHandler(evt) { //` is 192 //c is 67
+        if (evt.type === 'click' || (evt.keyCode == 192 && !isModifierKey(evt))) {
             if (++curColor >= colors.length) curColor = 0;
             document.getElementById('piano').style.backgroundColor = '#' + colors[curColor];
         }
@@ -222,10 +243,10 @@
         }
     });
 
-    var qTimeout, qCanToggle = true;;
+    var qTimeout, qCanToggle = true; //zw
     $(window).keypress(function(evt) {
         // trigger help when ? is pressed, but make sure it doesn't repeat crazy
-        if (evt.which == 63 || evt.which == 48) {
+        if (evt.which == 63 || evt.which == 77) { //m is 77 //0 is 48 // esc is 27 // / is 191 // shift is 16
             window.clearTimeout(qTimeout);
             qTimeout = window.setTimeout(function() {
                 qCanToggle = true;
@@ -379,7 +400,7 @@
                 cfg.notesOffset !== undefined && (notesOffset = cfg.notesOffset);
                 $keys.one('build-done.piano', function() {
                     //NOTE - jQuery.map flattens arrays
-                    var i = 0, song = $.map(data, function(x, i) { return i == 0 ? null : [x]; });
+                    var i = 0, song = $.map(data, function(x, i) { return i === 0 ? null : [x]; }); //zw
                     (function play() {
                         if (!demoing) return;
                         if (i >= song.length) { i = 0; }
@@ -400,7 +421,7 @@
         }
 
         function demoHandler(evt) {
-            if (evt.type === 'click' || (evt.keyCode == 77 && !isModifierKey(evt))) {
+            if (evt.type === 'click' || (evt.keyCode == 17 && !isModifierKey(evt))) { //m is 77 // control is 
                 if (demoing) {
                     demoing = false;
                     window.clearTimeout(demoingTimeout);
@@ -477,7 +498,7 @@
         $looper.mousedown(recordStart).mouseup(recordStop);
 
         $(window).on('keydown keyup', function(evt) {
-            if (evt.which == 57 && !isModifierKey(evt)) {
+            if (evt.which == 8 && !isModifierKey(evt)) { //delete is 8 //9 is keycode 57
                 evt.type == 'keydown' ? recordStart() : recordStop();
             }
         });
@@ -513,7 +534,7 @@
         }
 
         function getData(note) {
-            var data = [], freq = Notes.noteToFreq(note), vol = 1, sampleRate = 2024, secs = .1;
+            var data = [], freq = Notes.noteToFreq(note), vol = 1, sampleRate = 2024, secs = 0.1;
             var volumeFn = DataGenerator.volume.default;
             var styleFn = DataGenerator.style.default;
             var maxI = sampleRate * secs;
@@ -561,7 +582,10 @@
                 yIncrement = yPerStep / iPerStep,
                 step = 0,
                 i = 0,
-                color = '#' + choice('f33 33f 3f3 ff3 f3f 3ff'.split(' '));
+                //color = '#' + choice('f33 33f 3f3 ff3 f3f 3ff'.split(' ')); //zw
+                color = '#23f3'; //zw //black
+                color = '#f7df1e'; //zw //yellow
+                color = '#0df1a'; //zw //black
 
             // startY -> endY in steps
             // each step is yPerStep = (endY - startY) / steps long
@@ -629,14 +653,14 @@
             coordsLen = coords.length;
 
         bctx.strokeStyle = 'rgba(0,0,0,.5)';
-        bctx.lineWidth = .5;
+        bctx.lineWidth = 0.5; //zw
 
         function draw() {
             bctx.fillStyle = shouldAnimate ? 'rgba(255,255,0,.75)' : 'rgba(0,0,0,.25)';
             bctx.clearRect(0, 0, bW, bH);
             bctx.beginPath();
             for (var i=0; i<coordsLen; i++) {
-                bctx[i == 0 ? 'moveTo' : 'lineTo'](coords[i][0], coords[i][1]);
+                bctx[i === 0 ? 'moveTo' : 'lineTo'](coords[i][0], coords[i][1]); //zw
             }
             bctx.closePath();
             if (shouldAnimate) bctx.stroke();
@@ -646,7 +670,7 @@
 
         // handlers
         function toggleAnimate(evt) {
-            if (evt.type === 'click' || (evt.keyCode == 56 && !isModifierKey(evt))) {
+            if (evt.type === 'click' || (evt.keyCode == 220 && !isModifierKey(evt))) { // \ is keycode 220 //8  is keycode 56
                 shouldAnimate = !shouldAnimate;
                 draw();
             }
