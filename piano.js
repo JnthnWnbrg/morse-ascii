@@ -485,22 +485,27 @@
                  }
 	     ];
 
-	     var ascii_code = [1, 0, 1];
+	     var ascii_code = [0, 1, 1, 0, 0, 0, 0, 1]; //letter A
+	     // 0 is single click noise, 
+	     // 1 is double click noise
 
-	     var beat_spacing = 32;
-	     data.push(
-                 [beat_spacing*(3/4), 5], //delay before this note
-                 [beat_spacing*(1/4)], //a delay before silence (no note)
+	     var which_bit = 0;
+	     while (which_bit < ascii_code.length) {
+		 var beat_spacing = 32;
+		 data.push(
+                     [beat_spacing*(3/4), 5] //delay before this note
+		 );
 
-		 [beat_spacing*(3/4), 5],
-		 [beat_spacing*(1/4), 5],
+		 if (ascii_code[which_bit]) {
+		     data.push([beat_spacing*(1/4), 5]);
+		     //a short delay before the second note
+		 } else {
+		     data.push([beat_spacing*(1/4)]);
+		     //a delay before silence (no note)
+		 }
 
-		 [beat_spacing*(3/4), 5],
-		 [beat_spacing*(1/4), 5],
-
-		 [beat_spacing*(3/4), 5],
-                 [beat_spacing*(1/4), 5],
-	     );
+		 which_bit++;
+	     }
 
 	     return data;
          })();
