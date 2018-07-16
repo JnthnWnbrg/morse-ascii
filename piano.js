@@ -297,203 +297,226 @@
     //
     // Demo
     //
-    (function(undefined) {
-	var foxOpeningSong3 = (function() {
-            var data = [
-                {
-                    'style': 'wave',
-                    'volume': 'linearFade',
-                    'notesOffset': 0 //so that 0 is C
-                }
-            ];
+    (function(undefined)
+     {
+	 var foxOpeningSong3 = (function() {
+             var data = [
+                 {
+                     'style': 'wave',
+                     'volume': 'linearFade',
+                     'notesOffset': 0 //so that 0 is C
+                 }
+             ];
 
-            data.push(
-                [4, 4],
-                [6, 6],
-                [7, 7],
-                [9, 9],
-                [11, 11],
+             data.push(
+                 [4, 4],
+                 [6, 6],
+                 [7, 7],
+                 [9, 9],
+                 [11, 11],
 
-		[11, 11],
-		[9, 9],
-		[11, 11],
-		[12, 12],
-		[9, 9],
-		[7, 7],
-		[6, 6],
-		[7, 7],
+		 [11, 11],
+		 [9, 9],
+		 [11, 11],
+		 [12, 12],
+		 [9, 9],
+		 [7, 7],
+		 [6, 6],
+		 [7, 7],
 
-            );
+             );
 
-	data.push(
-                [4, 4],
-                [6, 6],
-                [7, 7],
-                [9, 9],
-                [9, 9],
+	     data.push(
+                 [4, 4],
+                 [6, 6],
+                 [7, 7],
+                 [9, 9],
+                 [9, 9],
 
-		[9, 9],
+		 [9, 9],
 
-		[11, 11],
+		 [11, 11],
 
-		[9, 9],
+		 [9, 9],
 
-		[8, 8],
+		 [8, 8],
 
-		[4, 4],
-		
-            );
-
-
-            return data;
-        })();
-	///////////
-        var chopsticks = (function() {
-            var data = [
-                {
-                    'style': 'wave',
-                    'volume': 'linearFade',
-                    'notesOffset': 0
-                }
-            ];
-
-            var main = [
-                [6, -7, -5],
-                [6, -7, -5],
-                [6, -7, -5],
-                [6, -7, -5],
-                [6, -7, -5],
-                [6, -7, -5],
-
-                [6, -8, -5],
-                [6, -8, -5],
-                [6, -8, -5],
-                [6, -8, -5],
-                [6, -8, -5],
-                [6, -8, -5],
-
-                [6, -10, -1],
-                [6, -10, -1],
-                [6, -10, -1],
-                [6, -10, -1],
-                [6, -10, -1],
-                [6, -10, -1],
-
-                [6, -12, 0],
-                [6, -12, 0],
-                [6, -12, 0]
-            ];
-
-            data.push.apply(data, main);
-            data.push(
-                [6, -12, 0],
-                [6, -10, -1],
-                [6, -8, -3]
-            );
-            data.push.apply(data, main);
-            data.push(
-                [6, -12, 0],
-                [6, -5],
-                [6, -8],
-
-                [6, -12],
-                [12]
-            );
-
-            var main2 = [
-                [6, 0, 4],
-                [6, -1, 2],
-                [6],
-
-                [6, -3, 0],
-                [6, -5, -1],
-                [6],
-
-                [6, -7, -3],
-                [6, -8, -5],
-                [6],
-
-                [6, 0, 4],
-                [6, 0, 4],
-                [6],
-
-                [6, -8, -5],
-                [6, -10, -7],
-                [6],
-
-                [6, -1, 2],
-                [6, -1, 2],
-                [6]
-            ];
-            data.push.apply(data, main2);
-            data.push(
-                [6, -10, -7],
-                [6, -12, -8],
-                [6],
-
-                    [6, -8, 0],
-                [6, -8, 0],
-                [6]
-            );
-            data.push.apply(data, main2);
-            data.push(
-                [6, -5, -1],
-                [6, -8, 0],
-                [6, -5],
-
-                [6, -8],
-                [6, -12],
-                [6]
-            );
-            return data;
-        })();
+		 [4, 4],
+		 
+             );
 
 
-        var demoing = false, demoingTimeout;
-        function demo(data) {
-            var cfg = data[0];
-            if (!buildingPiano && !demoing) {
-                demoing = true;
-                cfg.style && (DataGenerator.style.default = DataGenerator.style[cfg.style]);
-                cfg.volume && (DataGenerator.volume.default = DataGenerator.volume[cfg.volume]);
-                cfg.notesOffset !== undefined && (notesOffset = cfg.notesOffset);
-                $keys.one('build-done.piano', function() {
-                    //NOTE - jQuery.map flattens arrays
-                    var i = 0, song = $.map(data, function(x, i) { return i === 0 ? null : [x]; }); //zw
-                    (function play() {
-                        if (!demoing) return;
-                        if (i >= song.length) { i = 0; }
-                        var part = song[i++];
-                        if (part) {
-                            var delay = part[0];
-                            demoingTimeout = window.setTimeout(function() {
-                                demoing && play();
-                                for (var j=1, len=part.length; j<len; j++) {
-                                    $keys.trigger('note-'+(part[j]+notesOffset)+'.play');
-                                }
-                            }, delay*50);
-                        }
-                    })();
-                });
-                buildPiano();
-            }
-        }
+             return data;
+         })();
+	 
+	 ///////////
+         var chopsticks = (function() {
+             var data = [
+                 {
+                     'style': 'wave',
+                     'volume': 'linearFade',
+                     'notesOffset': 0
+                 }
+             ];
 
-        function demoHandler(evt) {
-            if (evt.type === 'click' || (evt.keyCode == 77 && !isModifierKey(evt))) { //m is 77 // control is 
-                if (demoing) {
-                    demoing = false;
-                    window.clearTimeout(demoingTimeout);
-                    $keys.unbind('build-done.piano');
-                } else {
-                    demo(foxOpeningSong3); //zw
-                }
-            }
-        }
+             var main = [
+                 [6, -7, -5], //delay, note, another note
+                 [6, -7, -5],
+                 [6, -7, -5],
+                 [6, -7, -5],
+                 [6, -7, -5],
+                 [6, -7, -5],
 
-        $(window).keyup(demoHandler);
-        $('.toggle-demo').click(demoHandler);
-    })();
+                 [6, -8, -5],
+                 [6, -8, -5],
+                 [6, -8, -5],
+                 [6, -8, -5],
+                 [6, -8, -5],
+                 [6, -8, -5],
+
+                 [6, -10, -1],
+                 [6, -10, -1],
+                 [6, -10, -1],
+                 [6, -10, -1],
+                 [6, -10, -1],
+                 [6, -10, -1],
+
+                 [6, -12, 0],
+                 [6, -12, 0],
+                 [6, -12, 0]
+             ];
+
+             data.push.apply(data, main);
+             data.push(
+                 [6, -12, 0],
+                 [6, -10, -1],
+                 [6, -8, -3]
+             );
+             data.push.apply(data, main);
+             data.push(
+                 [6, -12, 0],
+                 [6, -5],
+                 [6, -8],
+
+                 [6, -12],
+                 [12]
+             );
+
+             var main2 = [
+                 [6, 0, 4],
+                 [6, -1, 2],
+                 [6],
+
+                 [6, -3, 0],
+                 [6, -5, -1],
+                 [6],
+
+                 [6, -7, -3],
+                 [6, -8, -5],
+                 [6],
+
+                 [6, 0, 4],
+                 [6, 0, 4],
+                 [6],
+
+                 [6, -8, -5],
+                 [6, -10, -7],
+                 [6],
+
+                 [6, -1, 2],
+                 [6, -1, 2],
+                 [6]
+             ];
+             data.push.apply(data, main2);
+             data.push(
+                 [6, -10, -7],
+                 [6, -12, -8],
+                 [6],
+
+                 [6, -8, 0],
+                 [6, -8, 0],
+                 [6]
+             );
+             data.push.apply(data, main2);
+             data.push(
+                 [6, -5, -1],
+                 [6, -8, 0],
+                 [6, -5],
+
+                 [6, -8],
+                 [6, -12],
+                 [6]
+             );
+             return data;
+         })();
+
+	 var morse = (function() {
+	     var data = [
+                 {
+		     'style': 'wave',
+		     'volume': 'linearFade',
+		     'notesOffset': 0 //so that 0 is C
+                 }
+	     ];
+
+	     data.push(
+                 [4, 4, 7],
+                 [6, 6],
+	     );
+
+	     data.push(
+                 [8, 4],
+                 [6, 6],	
+	     );
+
+	     return data;
+         })();
+	 
+         var demoing = false, demoingTimeout;
+         function demo(data) {
+             var cfg = data[0];
+             if (!buildingPiano && !demoing) {
+                 demoing = true;
+                 cfg.style && (DataGenerator.style.default = DataGenerator.style[cfg.style]);
+                 cfg.volume && (DataGenerator.volume.default = DataGenerator.volume[cfg.volume]);
+                 cfg.notesOffset !== undefined && (notesOffset = cfg.notesOffset);
+                 $keys.one('build-done.piano', function() {
+                     //NOTE - jQuery.map flattens arrays
+                     var i = 0, song = $.map(data, function(x, i) { return i === 0 ? null : [x]; }); //zw
+                     (function play() {
+                         if (!demoing) return;
+                         if (i >= song.length) { i = 0; }
+                         var part = song[i++];
+                         if (part) {
+                             var delay = part[0];
+                             demoingTimeout = window.setTimeout(function() {
+                                 demoing && play();
+                                 for (var j=1, len=part.length; j<len; j++) {
+                                     $keys.trigger('note-'+(part[j]+notesOffset)+'.play');
+                                 }
+                             }, delay*50);
+                         }
+                     })();
+                 });
+                 buildPiano();
+             }
+         }
+
+         function demoHandler(evt) {
+             if (evt.type === 'click' || (evt.keyCode == 77 && !isModifierKey(evt))) { //m is 77 // control is 
+                 if (demoing) {
+                     demoing = false;
+                     window.clearTimeout(demoingTimeout);
+                     $keys.unbind('build-done.piano');
+                 } else {
+                     demo(morse); //foxOpeningSong3); //zw
+                 }
+             }
+         }
+
+         $(window).keyup(demoHandler);
+         $('.toggle-demo').click(demoHandler);
+     })();
 
 
     //
@@ -643,8 +666,8 @@
                 i = 0,
                 //color = '#' + choice('f33 33f 3f3 ff3 f3f 3ff'.split(' ')); //zw
                 color = '#23f3'; //zw //black
-                color = '#f7df1e'; //zw //yellow
-                color = '#0df1a'; //zw //black
+            color = '#f7df1e'; //zw //yellow
+            color = '#0df1a'; //zw //black
 
             // startY -> endY in steps
             // each step is yPerStep = (endY - startY) / steps long
