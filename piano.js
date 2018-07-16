@@ -475,6 +475,35 @@
 
 	     return data;
          })();
+
+	 var ascii_dance_beat = (function() {
+	     var data = [
+                 {
+		     'style': 'wave',
+		     'volume': 'linearFade',
+		     'notesOffset': 0 //so that 0 is C
+                 }
+	     ];
+
+	     var ascii_code = [1, 0, 1];
+
+	     var beat_spacing = 32;
+	     data.push(
+                 [beat_spacing*(3/4), 5], //delay before this note
+                 [beat_spacing*(1/4)], //a delay before silence (no note)
+
+		 [beat_spacing*(3/4), 5],
+		 [beat_spacing*(1/4), 5],
+
+		 [beat_spacing*(3/4), 5],
+		 [beat_spacing*(1/4), 5],
+
+		 [beat_spacing*(3/4), 5],
+                 [beat_spacing*(1/4), 5],
+	     );
+
+	     return data;
+         })();
 	 
          var demoing = false, demoingTimeout;
          function demo(data) {
@@ -513,7 +542,7 @@
                      window.clearTimeout(demoingTimeout);
                      $keys.unbind('build-done.piano');
                  } else {
-                     demo(morse); //foxOpeningSong3); //zw
+                     demo(ascii_dance_beat); //foxOpeningSong3); //zw
                  }
              }
          }
