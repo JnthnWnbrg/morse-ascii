@@ -214,7 +214,14 @@
             } else if (keyCode == 37 || keyCode == 39) {
                 notesOffset += (keyCode == 37 ? -1 : 1) * 12;
                 buildPiano();
-            }
+	    } else if (keyCode == 78) { //zw //78 is N in firefox
+		//new page sorta
+		//refresh
+		location.reload();
+
+		//because i want to be able to press R as a note, so pressing control-R is not easy
+	    }
+		
         }
     }).keyup(function(evt) {
         delete downKeys[evt.keyCode];
@@ -541,8 +548,11 @@
          }
 
          function demoHandler(evt) {
-             if (evt.type === 'click' || (evt.keyCode == 77 && !isModifierKey(evt))) { //m is 77 // control is 
-                 if (demoing) {
+             if (evt.type === 'click'
+		 || (evt.keyCode == 77 && !isModifierKey(evt))) {
+		 //m is 77 // control is 
+
+		 if (demoing) {
                      demoing = false;
                      window.clearTimeout(demoingTimeout);
                      $keys.unbind('build-done.piano');
@@ -556,7 +566,9 @@
          $('.toggle-demo').click(demoHandler);
      })();
 
-
+    $(window).keyup(demoHandler);
+    $('.toggle-demo').click(demoHandler);
+    
     //
     // Looper
     //
