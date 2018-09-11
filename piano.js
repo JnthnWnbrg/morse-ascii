@@ -487,7 +487,7 @@
 	     var data = [
                  {
 		     'style': 'wave',
-		     'volume': 'linearFade',
+		     'volume': 'flat',
 		     'notesOffset': 0 //so that 0 is C
                  }
 	     ];
