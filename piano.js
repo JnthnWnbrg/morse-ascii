@@ -487,7 +487,7 @@
 	     var data = [
                  {
 		     'style': 'wave',
-		     'volume': 'flat',
+		     'volume': 'linearFade',
 		     'notesOffset': 0 //so that 0 is C
                  }
 	     ];
@@ -498,7 +498,7 @@
 
 	     var which_bit = 0;
 	     while (which_bit < ascii_code.length) {
-		 var beat_spacing = 32;
+		 var beat_spacing = 20;//16;//32;
 		 data.push(
                      [beat_spacing*(3/4), 5] //delay before this note
 		 );
@@ -508,7 +508,7 @@
 		     //a short delay before the second note
 		 } else {
 		     data.push([beat_spacing*(1/4)]);
-		     //a delay before silence (no note)
+		     //a short delay before the additional silence (no note)
 		 }
 
 		 which_bit++;
@@ -532,14 +532,19 @@
                          if (!demoing) return;
                          if (i >= song.length) { i = 0; }
                          var part = song[i++];
-                         if (part) {
+                         if (part)
+			 {
                              var delay = part[0];
-                             demoingTimeout = window.setTimeout(function() {
-                                 demoing && play();
-                                 for (var j=1, len=part.length; j<len; j++) {
-                                     $keys.trigger('note-'+(part[j]+notesOffset)+'.play');
-                                 }
-                             }, delay*50);
+                             demoingTimeout = window.setTimeout
+			     (function()
+			      {
+                                  demoing && play();
+                                  for (var j=1, len=part.length; j<len; j++)
+				  {
+                                      $keys.trigger('note-'+(part[j]+notesOffset)+'.play');
+                                  }
+			      }, delay*60
+			     );
                          }
                      })();
                  });
@@ -715,9 +720,9 @@
                 step = 0,
                 i = 0,
                 //color = '#' + choice('f33 33f 3f3 ff3 f3f 3ff'.split(' ')); //zw
-                color = '#23f3'; //zw //black
-            color = '#f7df1e'; //zw //yellow
-            color = '#0df1a'; //zw //black
+                // color = '#23f3'; //zw //black
+		// color = '#f7df1e'; //zw //yellow
+		color = '#0df1a'; //zw //black
 
             // startY -> endY in steps
             // each step is yPerStep = (endY - startY) / steps long
