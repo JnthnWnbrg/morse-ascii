@@ -1,3 +1,7 @@
+morse ASCII sound
+More up-to-date project moved to my fork of Metronome for better timing than the piano web-app. Metronome: https://github.com/zoeweinberg/metronome.git
+
+old readme:
 HTML5 JavaScript Piano
 ======================
 
